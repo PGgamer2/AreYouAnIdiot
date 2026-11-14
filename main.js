@@ -64,11 +64,20 @@ function StartAnimation() {
   if (heightWindowCheck == null || heightWindowCheck.closed) {
     heightWindowCheck = openWindow();
   }
+  if (prevXposWWC == widthWindowCheck.screenLeft && prevYposHWC == heightWindowCheck.screenTop) {
+    stFinished = true;
+  	screenWidth = prevXposWWC;
+  	screenHeight = prevYposHWC;
+  	widthWindowCheck.close();
+  	heightWindowCheck.close();
+  	RhythmFunc();
+  	return;
+  }
   try {
     prevXposWWC = widthWindowCheck.screenLeft;
     prevYposHWC = heightWindowCheck.screenTop;
-  	widthWindowCheck.moveBy(300, 0);
-  	heightWindowCheck.moveBy(0, 300);
+  	widthWindowCheck.moveBy(10000, 0);
+  	heightWindowCheck.moveBy(0, 10000);
   } catch(error) {
     try { widthWindowCheck.close(); heightWindowCheck.close(); } catch(error) {} // Try closing the windows
     console.log(error);
@@ -77,14 +86,7 @@ function StartAnimation() {
     vConsole.scrollTop = vConsole.scrollHeight;
     return;
   }
-  if (prevXposWWC == widthWindowCheck.screenLeft && prevYposHWC == heightWindowCheck.screenTop) {
-    stFinished = true;
-  	screenWidth = prevXposWWC;
-  	screenHeight = prevYposHWC;
-  	widthWindowCheck.close();
-  	heightWindowCheck.close();
-  	RhythmFunc();
-  } else startLoop = setTimeout(StartAnimation,1); // Repeat until border is reached
+  startLoop = setTimeout(StartAnimation,1); // Repeat until border is reached
 }
 
 function openWindow(location, newWindowX, newWindowY, newWindowWidth, newWindowHeight) {
